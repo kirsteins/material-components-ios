@@ -8,14 +8,15 @@ let application = Target.target(
     sources: ["src"],
     publicHeadersPath: "src")
 
-let availabilityT = Target.target(
-    name: "AvailabilityT",
-    path: "components/AvailabilityT")
+let availability = Target.target(
+    name: "Availability",
+    path: "components/Availability",
+    publicHeadersPath: "src")
 
 let color = Target.target(
     name: "Color",
     dependencies: [
-        .target(name: availabilityT.name)
+        .target(name: availability.name)
     ],
     path: "components/private/Color/",
     sources: ["src"],
@@ -30,7 +31,7 @@ let math = Target.target(
 let elevation = Target.target(
     name: "Elevation",
     dependencies: [
-        .target(name: availabilityT.name),
+        .target(name: availability.name),
         .target(name: color.name),
         .target(name: math.name)
     ],
@@ -105,11 +106,11 @@ let package = Package(
             ]),
     ],
     targets: [
+        availability,
         application,
+        color,
         math,
         keyboardWatcher,
-        availabilityT,
-        color,
         shadowElevations,
         shadowLayer,
         shapes,
